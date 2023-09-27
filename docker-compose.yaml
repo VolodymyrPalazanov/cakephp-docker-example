@@ -1,22 +1,15 @@
 version: '3'
 services:
-  mysql:
+  web:
+    build: .
+    ports:
+      - "8080:80"
+    volumes:
+      - ./src:/var/www/html
+    depends_on:
+      - db
+
+  db:
     image: mysql:5.7
     environment:
-      MYSQL_ROOT_PASSWORD: root_password
-      MYSQL_DATABASE: cakephp_db
-    ports:
-      - "3306:3306"
-    volumes:
-      - mysql_data:/var/lib/mysql
-
-  php:
-    image: php:8.1-apache
-    ports:
-      - "80:80"
-    volumes:
-      - ./app:/var/www/html
-      - ./php.ini:/usr/local/etc/php/php.ini
-
-volumes:
-  mysql_data:
+      MYSQL_ROOT_PASSWORD: examplepassword
